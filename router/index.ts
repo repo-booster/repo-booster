@@ -1,46 +1,52 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Dashboard',
-    component: () => import('~/pages/index.vue')
+    component: () => import('~/pages/index.vue'),
   },
   {
-    path: '/features/star-growth',
-    name: 'StarGrowth',
-    component: () => import('~/pages/features/star-growth.vue')
-  },
-  {
-    path: '/features/analytics',
-    name: 'Analytics',
-    component: () => import('~/pages/features/analytics.vue')
-  },
-  {
-    path: '/features/readme-seo',
-    name: 'Readme',
-    component: () => import('~/pages/features/readme-seo.vue')
-  },
-  {
-    path: '/features/seo-toolbox',
-    name: 'SeoToolbox',
-    component: () => import('~/pages/features/seo-toolbox.vue')
-  },
-  {
-    path: '/features/social-media',
-    name: 'SocialMedia',
-    component: () => import('~/pages/features/social-media.vue')
-  },
-  {
-    path: '/features/updates',
-    name: 'LatestUpdates',
-    component: () => import('~/pages/features/updates.vue')
-  },
-  {
-    path: '/features/roadmap',
-    name: 'ProjectRoadmap',
-    component: () => import('~/pages/features/roadmap.vue')
+    path: '/features',
+    name: 'Features',
+    children: [
+      {
+        path: 'star-growth',
+        name: 'StarGrowth',
+        component: () => import('~/pages/features/star-growth.vue'),
+      },
+      {
+        path: 'analytics',
+        name: 'Analytics',
+        component: () => import('~/pages/features/analytics.vue'),
+      },
+      {
+        path: 'readme-seo',
+        name: 'ReadmeSEO',
+        component: () => import('~/pages/features/readme-seo.vue'),
+      },
+      {
+        path: 'seo-toolbox',
+        name: 'SEOToolbox',
+        component: () => import('~/pages/features/seo-toolbox.vue'),
+      },
+      {
+        path: 'social-media',
+        name: 'SocialMedia',
+        component: () => import('~/pages/features/social-media.vue'),
+      },
+      {
+        path: 'updates',
+        name: 'LatestUpdates',
+        component: () => import('~/pages/features/updates.vue'),
+      },
+      {
+        path: 'roadmap',
+        name: 'ProjectRoadmap',
+        component: () => import('~/pages/features/roadmap.vue'),
+      },
+    ],
   },
   {
     path: '/settings',
@@ -50,25 +56,25 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'members',
         name: 'SettingsMembers',
-        component: () => import('~/pages/settings/members.vue')
+        component: () => import('~/pages/settings/members.vue'),
       },
       {
         path: 'notifications',
         name: 'SettingsNotifications',
-        component: () => import('~/pages/settings/notifications.vue')
-      }
-    ]
+        component: () => import('~/pages/settings/notifications.vue'),
+      },
+    ],
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('~/error.vue')
-  }
-]
+    component: () => import('~/error.vue'),
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
