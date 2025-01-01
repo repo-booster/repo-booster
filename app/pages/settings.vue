@@ -15,7 +15,7 @@ const links = [[{
 }], [{
   label: 'Documentation',
   icon: 'i-heroicons-book-open',
-  to: 'https://docs.repo-booster.com/pro',
+  to: 'https://docs.repo-booster.com/',
   target: '_blank'
 }, {
   label: 'Upgrade now',
