@@ -2,11 +2,11 @@ export function useLoginFields() {
   const fields = [{
     name: 'email',
     type: 'email',
-    label: 'Space Email',
-    placeholder: 'astronaut@space.station'
+    label: 'Email',
+    placeholder: 'email'
   }, {
     name: 'password',
-    label: 'Access Code',
+    label: 'Password',
     type: 'password',
     placeholder: 'Enter your secret access code'
   }]
