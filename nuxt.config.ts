@@ -9,8 +9,38 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/devtools',
     '@nuxtjs/device',
-    '@nuxtjs/seo'
+    '@nuxtjs/seo',
+    '@nuxtjs/sitemap'
   ],
+
+  sitemap: <Partial<import('@nuxtjs/sitemap').ModuleOptions>>{
+    hostname: 'https://app.repo-booster.com',
+    routes: [
+      '/',
+      '/features/analytics',
+      '/features/readme-seo',
+      '/features/roadmap',
+      '/features/seo-toolbox',
+      '/features/social-media',
+      '/features/star-growth',
+      '/features/updates',
+      '/settings',
+      '/settings/members',
+      '/settings/notifications',
+      '/inbox',
+      '/login',
+      '/signup',
+      '/users'
+    ]
+  },
+
+  app: {
+    head: {
+      meta: [
+        { name: 'robots', content: 'noindex, nofollow' } // Default for all pages
+      ]
+    }
+  },
 
   devtools: {
     enabled: true
@@ -25,8 +55,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // Temporary workaround for prerender regression. see https://github.com/nuxt/nuxt/issues/27490
-    '/': { prerender: true }
+    '/': { prerender: true } // Temporary workaround for prerender regression. see https://github.com/nuxt/nuxt/issues/27490
   },
 
   future: {
@@ -47,4 +76,4 @@ export default defineNuxtConfig({
       }
     }
   }
-})
+});

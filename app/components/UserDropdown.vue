@@ -57,12 +57,12 @@ const items = computed(() => [
         color="gray"
         variant="ghost"
         class="w-full"
-        label="Benjamin"
+        label="User"
         :class="[open && 'bg-gray-50 dark:bg-gray-800']"
       >
         <template #leading>
           <UAvatar
-            src="https://avatars.githubusercontent.com/u/?v=4"
+            src="https://avatars.githubusercontent.com/u/187627989?v=4"
             size="2xs"
           />
         </template>

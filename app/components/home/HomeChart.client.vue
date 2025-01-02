@@ -55,22 +55,22 @@
 <script setup lang="ts">
 import { format } from 'date-fns'
 import { VisXYContainer, VisLine, VisAxis, VisArea, VisCrosshair, VisTooltip } from '@unovis/vue'
-import type { GitHubTrafficData } from '~/types/github'
+import type { GitHubUser } from '~/types/github'
 
 const metrics = ['views', 'unique visitors']
 const selectedMetric = ref(metrics[0])
 
-const { data } = await useFetch<GitHubTrafficData[]>('/api/github/traffic')
+const { data } = await useFetch<GitHubUser[]>('https://api.github.com')
 
-const x = (_: GitHubTrafficData, i: number) => i
-const y = (d: GitHubTrafficData) => selectedMetric.value === 'views' ? d.count : d.uniques
+const x = (_: GitHubUser, i: number) => i
+const y = (d: GitHubUser) => selectedMetric.value === 'views' ? d.count : d.uniques
 
 const xTicks = (i: number) => {
   if (!data.value?.[i]) return ''
   return format(new Date(data.value[i].timestamp), 'MMM d')
 }
 
-const template = (d: GitHubTrafficData) => {
+const template = (d: GitHubUser) => {
   const value = selectedMetric.value === 'views' ? d.count : d.uniques
   return `${format(new Date(d.timestamp), 'MMM d')}: ${value.toLocaleString()} ${selectedMetric.value}`
 }
