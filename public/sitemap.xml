@@ -78,6 +78,16 @@
     <changefreq>yearly</changefreq>
   </url>
   <url>
+    <loc>https://www.app.repo-booster.com/reset-password</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.app.repo-booster.com/terms</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
     <loc>https://www.app.repo-booster.com/users</loc>
     <priority>0.7</priority>
     <changefreq>weekly</changefreq>

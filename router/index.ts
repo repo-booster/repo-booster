@@ -66,6 +66,16 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: () => import('~/pages/reset-password.vue')
+  },
+  {
+    path: '/terms',
+    name: 'TermsAndConditions',
+    component: () => import('~/pages/terms.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('~/error.vue')
