@@ -1,7 +1,9 @@
 <template>
   <UCard>
     <template #header>
-      <h3 class="text-lg font-medium">Recommendations</h3>
+      <h3 class="text-lg font-medium">
+        Recommendations
+      </h3>
     </template>
     <ul class="space-y-4">
       <li
@@ -16,7 +18,9 @@
           :class="priorityIconClass(recommendation.priority)"
         />
         <div>
-          <div class="font-medium">{{ recommendation.text }}</div>
+          <div class="font-medium">
+            {{ recommendation.text }}
+          </div>
           <div class="text-sm text-gray-500 mt-1">
             Priority: {{ recommendation.priority }}
           </div>

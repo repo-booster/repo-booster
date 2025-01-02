@@ -13,25 +13,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap'
   ],
 
-  sitemap: <Partial<import('@nuxtjs/sitemap').ModuleOptions>>{
-    hostname: 'https://app.repo-booster.com',
-    routes: [
-      '/',
-      '/features/analytics',
-      '/features/readme-seo',
-      '/features/roadmap',
-      '/features/seo-toolbox',
-      '/features/social-media',
-      '/features/star-growth',
-      '/features/updates',
-      '/settings',
-      '/settings/members',
-      '/settings/notifications',
-      '/inbox',
-      '/login',
-      '/signup',
-      '/users'
-    ]
+  devtools: {
+    enabled: true
   },
 
   app: {
@@ -40,10 +23,6 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'noindex, nofollow' } // Default for all pages
       ]
     }
-  },
-
-  devtools: {
-    enabled: true
   },
 
   colorMode: {
@@ -75,5 +54,26 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  sitemap: <Partial<import('@nuxtjs/sitemap').ModuleOptions>>{
+    hostname: 'https://app.repo-booster.com',
+    routes: [
+      '/',
+      '/features/analytics',
+      '/features/readme-seo',
+      '/features/roadmap',
+      '/features/seo-toolbox',
+      '/features/social-media',
+      '/features/star-growth',
+      '/features/updates',
+      '/settings',
+      '/settings/members',
+      '/settings/notifications',
+      '/inbox',
+      '/login',
+      '/signup',
+      '/users'
+    ]
   }
-});
+})

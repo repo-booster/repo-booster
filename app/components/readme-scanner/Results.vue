@@ -3,7 +3,9 @@
     <UCard>
       <template #header>
         <div class="flex items-center justify-between">
-          <h3 class="text-lg font-medium">SEO Score</h3>
+          <h3 class="text-lg font-medium">
+            SEO Score
+          </h3>
           <UBadge
             :color="scoreColor"
             size="lg"

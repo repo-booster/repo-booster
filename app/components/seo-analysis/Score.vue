@@ -1,11 +1,16 @@
 <template>
   <UCard>
     <template #header>
-      <h3 class="text-lg font-medium">SEO Score</h3>
+      <h3 class="text-lg font-medium">
+        SEO Score
+      </h3>
     </template>
     <div class="flex items-center justify-center p-6">
       <div class="relative">
-        <div class="text-4xl font-bold" :class="scoreColorClass">
+        <div
+          class="text-4xl font-bold"
+          :class="scoreColorClass"
+        >
           {{ score }}/100
         </div>
         <div class="text-sm text-gray-500 mt-2 text-center">

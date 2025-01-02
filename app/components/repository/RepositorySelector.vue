@@ -2,7 +2,9 @@
   <UCard>
     <template #header>
       <div class="flex items-center justify-between">
-        <h3 class="text-lg font-medium">Select Repository</h3>
+        <h3 class="text-lg font-medium">
+          Select Repository
+        </h3>
         <UButton
           color="primary"
           variant="ghost"
@@ -14,7 +16,10 @@
       </div>
     </template>
 
-    <div v-if="repositories.length" class="space-y-4">
+    <div
+      v-if="repositories.length"
+      class="space-y-4"
+    >
       <div
         v-for="repo in repositories"
         :key="repo.id"
@@ -23,27 +28,49 @@
         @click="$emit('update:modelValue', repo.id)"
       >
         <div class="flex items-center gap-3">
-          <UIcon name="i-heroicons-book-open" class="w-5 h-5 text-primary" />
+          <UIcon
+            name="i-heroicons-book-open"
+            class="w-5 h-5 text-primary"
+          />
           <div>
-            <div class="font-medium">{{ repo.name }}</div>
-            <div class="text-sm text-gray-400">{{ repo.description }}</div>
+            <div class="font-medium">
+              {{ repo.name }}
+            </div>
+            <div class="text-sm text-gray-400">
+              {{ repo.description }}
+            </div>
           </div>
         </div>
-        <UBadge v-if="repo.private" color="yellow">Private</UBadge>
+        <UBadge
+          v-if="repo.private"
+          color="yellow"
+        >
+          Private
+        </UBadge>
       </div>
     </div>
 
-    <div v-else class="text-center py-8 text-gray-500">
-      <UIcon name="i-heroicons-book-open" class="w-12 h-12 mx-auto mb-4 opacity-50" />
+    <div
+      v-else
+      class="text-center py-8 text-gray-500"
+    >
+      <UIcon
+        name="i-heroicons-book-open"
+        class="w-12 h-12 mx-auto mb-4 opacity-50"
+      />
       <p>No repositories found</p>
-      <p class="text-sm mt-2">Add a repository to get started</p>
+      <p class="text-sm mt-2">
+        Add a repository to get started
+      </p>
     </div>
 
     <!-- Add Repository Modal -->
     <UModal v-model="showAddRepo">
       <UCard>
         <template #header>
-          <h3 class="text-lg font-medium">Add Repository</h3>
+          <h3 class="text-lg font-medium">
+            Add Repository
+          </h3>
         </template>
 
         <UFormGroup
@@ -88,10 +115,12 @@ interface Repository {
   private: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<{
   modelValue?: string
 }>()
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
@@ -123,7 +152,7 @@ async function handleAddRepo() {
   try {
     // TODO: Implement repository addition logic
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
+
     // Mock adding a new repository
     repositories.value.push({
       id: String(repositories.value.length + 1),

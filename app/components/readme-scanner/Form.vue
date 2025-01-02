@@ -1,7 +1,9 @@
 <template>
   <UCard>
     <template #header>
-      <h3 class="text-lg font-medium">Repository Details</h3>
+      <h3 class="text-lg font-medium">
+        Repository Details
+      </h3>
     </template>
 
     <UFormGroup
@@ -10,9 +12,9 @@
     >
       <CommonFormInput
         :model-value="modelValue"
-        @update:model-value="$emit('update:modelValue', $event)"
         placeholder="https://github.com/username/repository"
         icon="i-heroicons-link"
+        @update:model-value="$emit('update:modelValue', $event)"
       />
     </UFormGroup>
   </UCard>
