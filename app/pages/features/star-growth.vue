@@ -1,23 +1,51 @@
 <template>
-  <div class="h-full flex flex-col">
-    <UPageHeader
-      title="Star Growth Analytics"
-      description="Track and analyze your repository's star growth"
-    />
+  <UDashboardPage>
+    <!-- Left Panel -->
+    <UDashboardPanel
+      id="analytics-overview"
+      :width="400"
+      :resizable="{ min: 300, max: 500 }"
+    >
+      <UDashboardNavbar
+        title="Star Growth Analytics"
+        description="Track and analyze your repository's star growth"
+      />
 
-    <div class="flex-1 overflow-y-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <StarGrowthStatCard
-          v-for="stat in stats"
-          :key="stat.label"
-          :stat="stat"
-        />
+      <div class="p-4 space-y-6">
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <StarGrowthStatCard
+            v-for="stat in stats"
+            :key="stat.label"
+            :stat="stat"
+          />
+        </div>
       </div>
+    </UDashboardPanel>
 
-      <StarGrowthChart :data="chartData" />
-      <StarGrowthHistory :history="starHistory" />
-    </div>
-  </div>
+    <!-- Right Panel -->
+    <UDashboardPanel grow collapsible side="right">
+      <UDashboardNavbar title="Detailed Analytics" />
+
+      <div class="p-4 space-y-6">
+        <!-- Star Growth Chart -->
+        <UCard>
+          <template #header>
+            <h3 class="text-lg font-medium">Star Growth Chart</h3>
+          </template>
+          <StarGrowthChart :data="chartData" />
+        </UCard>
+
+        <!-- Star Growth History -->
+        <UCard>
+          <template #header>
+            <h3 class="text-lg font-medium">Star Growth History</h3>
+          </template>
+          <StarGrowthHistory :history="starHistory" />
+        </UCard>
+      </div>
+    </UDashboardPanel>
+  </UDashboardPage>
 </template>
 
 <script setup lang="ts">
