@@ -1,30 +1,31 @@
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
+    <!-- Page Header -->
     <UPageHeader
       title="README Scanner"
       description="Analyze and optimize your repository's README file"
+      class="mb-6"
     />
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Main Scanner -->
+    <!-- Main Content Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+      <!-- Scanner and Results -->
       <div class="lg:col-span-2 space-y-6">
+        <!-- Scanner Form -->
         <ReadmeScannerForm v-model="repoUrl" />
-        <div
-          v-if="results"
-          class="space-y-6"
-        >
+
+        <!-- Results -->
+        <div v-if="results" class="space-y-6">
           <ReadmeScannerResults :results="results" />
         </div>
       </div>
 
-      <!-- Tools Panel -->
+      <!-- Tools and Templates Panel -->
       <div class="space-y-6">
-        <!-- Quick Tools -->
+        <!-- Tools -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">
-              README Tools
-            </h3>
+            <h3 class="text-lg font-medium">README Tools</h3>
           </template>
           <div class="space-y-4">
             <div
@@ -39,12 +40,8 @@
                   class="w-5 h-5 text-primary"
                 />
                 <div>
-                  <div class="font-medium">
-                    {{ tool.name }}
-                  </div>
-                  <div class="text-sm text-gray-500">
-                    {{ tool.description }}
-                  </div>
+                  <div class="font-medium">{{ tool.name }}</div>
+                  <div class="text-sm text-gray-500">{{ tool.description }}</div>
                 </div>
               </div>
             </div>
@@ -54,9 +51,7 @@
         <!-- Templates -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">
-              README Templates
-            </h3>
+            <h3 class="text-lg font-medium">README Templates</h3>
           </template>
           <div class="space-y-4">
             <div
@@ -70,12 +65,8 @@
                   class="w-5 h-5 text-primary"
                 />
                 <div>
-                  <div class="font-medium">
-                    {{ template.name }}
-                  </div>
-                  <div class="text-sm text-gray-500">
-                    {{ template.description }}
-                  </div>
+                  <div class="font-medium">{{ template.name }}</div>
+                  <div class="text-sm text-gray-500">{{ template.description }}</div>
                 </div>
               </div>
             </div>
@@ -85,9 +76,7 @@
         <!-- Best Practices -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">
-              Best Practices
-            </h3>
+            <h3 class="text-lg font-medium">Best Practices</h3>
           </template>
           <ul class="space-y-3">
             <li
@@ -106,13 +95,11 @@
       </div>
     </div>
 
-    <!-- Tool Modals -->
+    <!-- Modals -->
     <UModal v-model="showHeadingGenerator">
       <UCard>
         <template #header>
-          <h3 class="text-lg font-medium">
-            Heading Generator
-          </h3>
+          <h3 class="text-lg font-medium">Heading Generator</h3>
         </template>
         <div class="space-y-4">
           <UTextarea
