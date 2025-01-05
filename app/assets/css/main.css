@@ -2,6 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Styles */
+html, body, #__nuxt, #app {
+  @apply h-full min-h-screen w-full bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200;
+}
+
+/* Ensure body uses a clean, antialiased font */
 body {
-  @apply antialiased;
+  @apply antialiased font-sans;
+}
+
+/* Base app container styling */
+#app {
+  @apply flex flex-col;
+}
+
+/* Dashboard Pages */
+UDashboardPage {
+  @apply flex-1 flex flex-col;
+}
+
+/* Scrollable content areas with consistent spacing */
+.overflow-content {
+  @apply flex-1 overflow-y-auto p-6;
+}
+
+/* Responsive Grid Layout */
+.dashboard-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+}
+
+/* Card Styling */
+.card {
+  @apply bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4;
+}
+.card-header {
+  @apply text-lg font-medium mb-4;
+}
+.card-body {
+  @apply text-sm text-gray-500;
+}
+
+/* Utility Classes */
+.full-height {
+  @apply h-full min-h-screen flex flex-col;
+}
+
+/* Scrollable Areas */
+.scrollable-area {
+  @apply overflow-y-auto max-h-screen;
+}
+
+/* Responsive Typography */
+.text-responsive {
+  @apply text-sm sm:text-base md:text-lg lg:text-xl;
+}
+
+/* Panel Styling */
+.panel {
+  @apply p-4 rounded-lg bg-white dark:bg-gray-800 shadow-sm;
+}
+.panel-header {
+  @apply text-lg font-medium mb-2;
+}
+.panel-body {
+  @apply text-sm text-gray-500;
+}
+
+/* Buttons and Hover Effects */
+.button-primary {
+  @apply bg-primary text-white hover:bg-primary-dark transition-default;
+}
+.transition-default {
+  @apply transition duration-300 ease-in-out;
+}
+.card:hover {
+  @apply shadow-lg transform scale-105 transition-default;
+}
+
+/* Custom Grid Layout for Stats */
+.stats-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6;
+}
+
+/* Dark Mode Support */
+.dark-mode-bg {
+  @apply bg-gray-900 text-gray-100;
+}
+.dark-mode-card {
+  @apply bg-gray-800 text-gray-100 shadow-md;
+}
+
+/* Utility for Dark Mode Border */
+.dark-mode-border {
+  @apply border-gray-700;
 }
