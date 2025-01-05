@@ -56,6 +56,9 @@ export default defineNuxtConfig({
     }
   },
 
+  // Add the custom main.css file
+  css: ['~/assets/css/main.css'],
+
   sitemap: <Partial<import('@nuxtjs/sitemap').ModuleOptions>>{
     hostname: 'https://app.repo-booster.com',
     routes: [
@@ -76,4 +79,4 @@ export default defineNuxtConfig({
       '/users'
     ]
   }
-})
+});
