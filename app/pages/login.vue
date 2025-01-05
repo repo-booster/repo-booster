@@ -5,7 +5,7 @@
         :fields="fields"
         :validate="validate"
         :providers="providers"
-        title="Welcome Repo-Booster"
+        title="Welcome"
         align="top"
         :ui="{
           base: 'text-center',
@@ -24,7 +24,7 @@
         @submit="onSubmit"
       >
         <template #description>
-          Your All In One Developer Seo Booster
+          Your All In One SEO Tools
           <NuxtLink
             to="/signup"
             class="text-blue-400 hover:text-blue-300 font-medium"
@@ -65,7 +65,8 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Login - Repo-Booster'
+  title: 'Login - Repo-Booster',
+  description: 'Login / Signup to Repo-Booster with our OAuth option such as GitHub, Gitlab & Bitbucket to ensure security through our providers'
 })
 
 const { fields } = useLoginFields()
