@@ -1,95 +1,73 @@
+<template>
+  <div class="flex items-center justify-center min-h-screen">
+    <UCard class="w-full max-w-sm bg-gray-900/40 dark:bg-gray-900/60 backdrop-blur-sm border border-gray-800/50">
+      <UAuthForm
+        :fields="fields"
+        :validate="validate"
+        :providers="providers"
+        title="Register"
+        align="top"
+        :ui="{
+          base: 'text-center',
+          footer: 'text-center',
+          title: 'text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent',
+          description: 'text-gray-400',
+          divider: 'before:bg-gray-800 after:bg-gray-800',
+          form: 'space-y-4',
+          input: 'bg-gray-800/50 border-gray-700 text-gray-200 placeholder-gray-500',
+          submitButton: 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'
+        }"
+        :submit-button="{
+          label: 'Launch',
+          trailingIcon: 'i-heroicons-rocket-launch-20-solid'
+        }"
+        @submit="onSubmit"
+      >
+        <template #description>
+          Your All In One SEO Tool
+        </template>
+
+        <template #password-hint>
+          <NuxtLink
+            to="/reset-password"
+            class="text-blue-400 hover:text-blue-300 font-medium"
+          >
+            Forgot Password?
+          </NuxtLink>
+        </template>
+
+        <template #footer>
+          Terms of Service
+          <NuxtLink
+            to="/terms"
+            class="text-blue-400 hover:text-blue-300 font-medium"
+          >
+            Agreement
+          </NuxtLink>
+        </template>
+      </UAuthForm>
+    </UCard>
+  </div>
+</template>
+
 <script setup lang="ts">
+import { useAuthValidation } from '~/composables/useAuthValidation'
+import { useAuthProviders } from '~/composables/useAuthProviders'
+
 definePageMeta({
   layout: 'auth'
 })
 
 useSeoMeta({
-  title: 'Sign up'
+  title: 'Sign up Free - Repo-Booster',
+  description: 'Login / Signup to Repo-Booster with our OAuth option such as GitHub, Gitlab & Bitbucket to ensure security through our providers'
 })
 
-const fields = [{
-  name: 'name',
-  type: 'text',
-  label: 'Name',
-  placeholder: 'Enter your name'
-}, {
-  name: 'email',
-  type: 'email',
-  label: 'Email',
-  placeholder: 'Enter your email'
-}, {
-  name: 'password',
-  label: 'Password',
-  type: 'password',
-  placeholder: 'Enter your password'
-}]
-
-const validate = (state: any) => {
-  const errors = []
-  if (!state.email) errors.push({ path: 'email', message: 'Email is required' })
-  if (!state.password) errors.push({ path: 'password', message: 'Password is required' })
-  return errors
-}
-
-const providers = [
-  {
-    label: 'Continue with GitHub',
-    icon: 'i-simple-icons-github',
-    color: 'gray' as const,
-    click: () => {
-      console.log('Redirect to GitHub')
-    }
-  },
-  {
-    label: 'Continue with Bitbucket',
-    icon: 'i-simple-icons-bitbucket',
-    color: 'gray' as const,
-    click: () => {
-      console.log('Redirect to Bitbucket')
-    }
-  },
-  {
-    label: 'Continue with GitLab',
-    icon: 'i-simple-icons-gitlab',
-    color: 'gray' as const,
-    click: () => {
-      console.log('Redirect to GitLab')
-    }
-  }
-]
+const { fields } = useLoginFields()
+const { validate } = useAuthValidation()
+const { providers } = useAuthProviders()
 
 function onSubmit(data: any) {
-  console.log('Submitted', data)
+  console.log('Launching...', data)
 }
 </script>
-
-<!-- eslint-disable vue/multiline-html-element-content-newline -->
-<!-- eslint-disable vue/singleline-html-element-content-newline -->
-<template>
-  <UCard class="max-w-sm w-full bg-white/75 dark:bg-white/5 backdrop-blur">
-    <UAuthForm
-      :fields="fields"
-      :validate="validate"
-      :providers="providers"
-      align="top"
-      title="Create an account"
-      :ui="{ base: 'text-center', footer: 'text-center' }"
-      :submit-button="{ label: 'Create account' }"
-      @submit="onSubmit"
-    >
-      <template #description>
-        Already have an account? <NuxtLink
-          to="/login"
-          class="text-primary font-medium"
-        >Login</NuxtLink>.
-      </template>
-
-      <template #footer>
-        By signing up, you agree to our <NuxtLink
-          to="/"
-          class="text-primary font-medium"
-        >Terms of Service</NuxtLink>.
-      </template>
-    </UAuthForm>
-  </UCard>
-</template>
