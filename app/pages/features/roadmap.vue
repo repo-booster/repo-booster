@@ -1,20 +1,19 @@
 <template>
-  <div class="min-h-screen flex flex-col">
-    <!-- Page Header -->
+  <div>
     <UPageHeader
       title="Project Roadmap"
       description="Plan and showcase your project's future while attracting contributors"
-      class="mb-6"
     />
 
-    <!-- Main Content -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-      <!-- Development Roadmap -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Main Roadmap -->
       <div class="lg:col-span-2 space-y-6">
         <UCard>
           <template #header>
             <div class="flex items-center justify-between">
-              <h3 class="text-lg font-medium">Development Roadmap</h3>
+              <h3 class="text-lg font-medium">
+                Development Roadmap
+              </h3>
               <UButton
                 color="primary"
                 variant="ghost"
@@ -26,7 +25,6 @@
             </div>
           </template>
 
-          <!-- Milestones -->
           <div class="space-y-8">
             <div
               v-for="milestone in milestones"
@@ -36,7 +34,7 @@
               <!-- Timeline Line -->
               <div class="absolute top-0 bottom-0 left-2 w-px bg-gray-800" />
 
-              <!-- Milestone Content -->
+              <!-- Milestone -->
               <div class="relative flex gap-4 ml-2">
                 <div
                   class="w-4 h-4 rounded-full bg-primary shrink-0 relative z-10"
@@ -54,8 +52,9 @@
                       {{ milestone.status }}
                     </UChip>
                   </div>
-                  <p class="text-sm text-gray-500 mb-2">{{ milestone.description }}</p>
-
+                  <p class="text-sm text-gray-500 mb-2">
+                    {{ milestone.description }}
+                  </p>
                   <!-- Tasks -->
                   <div class="space-y-2">
                     <div
@@ -68,12 +67,16 @@
                         :disabled="!isAdmin"
                       />
                       <div class="flex-1">
-                        <div class="font-medium text-sm">{{ task.title }}</div>
-                        <div class="text-xs text-gray-500">{{ task.description }}</div>
+                        <div class="font-medium text-sm">
+                          {{ task.title }}
+                        </div>
+                        <div class="text-xs text-gray-500">
+                          {{ task.description }}
+                        </div>
                       </div>
                       <UBadge
                         v-if="task.difficulty"
-                        :color="getDifficultyColor(task.difficulty)"
+                        :colors="getDifficultyColor(task.difficulty)"
                       >
                         {{ task.difficulty }}
                       </UBadge>
@@ -83,12 +86,12 @@
                   <!-- Contributors -->
                   <div class="mt-4 flex items-center gap-2">
                     <div class="flex -space-x-2">
-                      <img
-                        v-for="contributor in milestone.contributors"
-                        :key="contributor.id"
-                        :src="contributor.avatar"
-                        :alt="contributor.name"
-                        class="w-6 h-6 rounded-full ring-2 ring-gray-900"
+                      <img>
+                      v-for="contributor in milestone.contributors"
+                      :key="contributor.id"
+                      :src="contributor.avatar"
+                      :alt="contributor.name"
+                      class="w-6 h-6 rounded-full ring-2 ring-gray-900"
                       />
                     </div>
                     <UButton
@@ -113,7 +116,9 @@
         <!-- Project Stats -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">Project Stats</h3>
+            <h3 class="text-lg font-medium">
+              Project Stats
+            </h3>
           </template>
           <div class="space-y-4">
             <div
@@ -127,10 +132,12 @@
           </div>
         </UCard>
 
-        <!-- Open Roles -->
+        <!-- Looking for Contributors -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">Looking for Contributors</h3>
+            <h3 class="text-lg font-medium">
+              Looking for Contributors
+            </h3>
           </template>
           <div class="space-y-4">
             <div
@@ -138,8 +145,12 @@
               :key="role.id"
               class="p-3 rounded-lg bg-gray-800/50"
             >
-              <div class="font-medium mb-1">{{ role.title }}</div>
-              <p class="text-sm text-gray-500 mb-2">{{ role.description }}</p>
+              <div class="font-medium mb-1">
+                {{ role.title }}
+              </div>
+              <p class="text-sm text-gray-500 mb-2">
+                {{ role.description }}
+              </p>
               <div class="flex flex-wrap gap-2">
                 <UBadge
                   v-for="skill in role.skills"
@@ -165,7 +176,9 @@
         <!-- Contribution Guidelines -->
         <UCard>
           <template #header>
-            <h3 class="text-lg font-medium">How to Contribute</h3>
+            <h3 class="text-lg font-medium">
+              How to Contribute
+            </h3>
           </template>
           <ul class="space-y-3">
             <li
@@ -188,18 +201,36 @@
     <UModal v-model="showAddMilestone">
       <UCard>
         <template #header>
-          <h3 class="text-lg font-medium">Add Milestone</h3>
+          <h3 class="text-lg font-medium">
+            Add Milestone
+          </h3>
         </template>
 
         <div class="space-y-4">
-          <UFormGroup label="Title" required>
+          <UFormGroup
+            label="Title"
+            required
+          >
             <UInput v-model="newMilestone.title" />
           </UFormGroup>
-          <UFormGroup label="Description" required>
-            <UTextarea v-model="newMilestone.description" />
+
+          <UFormGroup
+            label="Description"
+            required
+          >
+            <UTextarea
+              v-model="newMilestone.description"
+            />
           </UFormGroup>
-          <UFormGroup label="Target Date" required>
-            <UInput v-model="newMilestone.targetDate" type="date" />
+
+          <UFormGroup
+            label="Target Date"
+            required
+          >
+            <UInput
+              v-model="newMilestone.targetDate"
+              type="date"
+            />
           </UFormGroup>
         </div>
 
@@ -225,3 +256,131 @@
     </UModal>
   </div>
 </template>
+
+<script setup lang="ts">
+const isAdmin = ref(true)
+const showAddMilestone = ref(false)
+const saving = ref(false)
+
+const newMilestone = ref({
+  title: '',
+  description: '',
+  targetDate: ''
+})
+
+const milestones = ref([
+  {
+    id: '1',
+    title: 'Core Features',
+    description: 'Implement essential functionality',
+    status: 'completed',
+    current: false,
+    tasks: [
+      {
+        id: '1-1',
+        title: 'User Authentication',
+        description: 'Implement secure login and registration',
+        completed: true,
+        difficulty: 'medium'
+      },
+      {
+        id: '1-2',
+        title: 'Database Setup',
+        description: 'Configure and optimize database',
+        completed: true,
+        difficulty: 'hard'
+      }
+    ],
+    contributors: [
+      { id: '1', name: 'John Doe', avatar: 'https://avatars.githubusercontent.com/u/1' }
+    ]
+  },
+  {
+    id: '2',
+    title: 'Advanced Features',
+    description: 'Add advanced capabilities and optimizations',
+    status: 'in-progress',
+    current: true,
+    tasks: [
+      {
+        id: '2-1',
+        title: 'Performance Optimization',
+        description: 'Improve application performance',
+        completed: false,
+        difficulty: 'hard'
+      },
+      {
+        id: '2-2',
+        title: 'API Documentation',
+        description: 'Create comprehensive API docs',
+        completed: false,
+        difficulty: 'easy'
+      }
+    ],
+    contributors: [
+      { id: '2', name: 'Jane Smith', avatar: 'https://avatars.githubusercontent.com/u/2' }
+    ]
+  }
+])
+
+const projectStats = [
+  { label: 'Total Contributors', value: '12' },
+  { label: 'Open Tasks', value: '8' },
+  { label: 'Completed Milestones', value: '3' },
+  { label: 'Active Discussions', value: '5' }
+]
+
+const openRoles = [
+  {
+    id: '1',
+    title: 'Frontend Developer',
+    description: 'Help improve the user interface and experience',
+    skills: ['Vue.js', 'TypeScript', 'Tailwind CSS']
+  },
+  {
+    id: '2',
+    title: 'Documentation Writer',
+    description: 'Improve project documentation and guides',
+    skills: ['Technical Writing', 'Markdown', 'Documentation']
+  }
+]
+
+const guidelines = [
+  'Fork the repository and create a feature branch',
+  'Follow the coding style and conventions',
+  'Write clear commit messages',
+  'Add tests for new features',
+  'Update documentation as needed',
+  'Submit a pull request with your changes'
+]
+
+function getDifficultyColor(difficulty: string): string {
+  switch (difficulty) {
+    case 'easy': return 'green'
+    case 'medium': return 'yellow'
+    case 'hard': return 'red'
+    default: return 'gray'
+  }
+}
+
+async function saveMilestone() {
+  saving.value = true
+  try {
+    // TODO: Implement milestone saving logic
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    showAddMilestone.value = false
+  } finally {
+    saving.value = false
+  }
+}
+
+function joinMilestone(milestoneId: string) {
+  // TODO: Implement join milestone logic
+  console.log('Joining milestone:', milestoneId)
+}
+
+function applyForRole(roleId: string) {
+  // TODO: Implement role application logic
+  console.log('Applying for role:', roleId)
+}
+</script>
