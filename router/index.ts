@@ -44,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'roadmap',
         name: 'ProjectRoadmap',
         component: () => import('~/pages/features/roadmap.vue')
+      },
+      {
+        path: 'seo-analyzer',
+        name: 'SeoAnalyzer',
+        component: () => import('~/pages/features/seo-compare.vue')
       }
     ]
   },

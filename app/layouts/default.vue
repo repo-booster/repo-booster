@@ -25,7 +25,7 @@ const links = [
       { label: 'README Scanner', icon: 'i-heroicons-document-text', to: '/features/readme-seo' },
       { label: 'SEO Toolbox', icon: 'i-heroicons-briefcase', to: '/features/seo-toolbox' },
       { label: 'Social Media', icon: 'i-heroicons-share', to: '/features/social-media' },
-      { label: 'Latest Updates', icon: 'i-heroicons-bell', to: '/features/updates' },
+      { label: 'AI Seo Compare', icon: 'i-heroicons-presentation-chart-line', to: '/features/seo-compare' },
       { label: 'Project Roadmap', icon: 'i-heroicons-map', to: '/features/roadmap' }
     ],
     tooltip: {
