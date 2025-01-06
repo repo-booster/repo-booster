@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { sub } from 'date-fns'
-import type { Period, Range } from '~/types'
+import type { Period, Range } from '~/types/types'
 
 const { isNotificationsSlideoverOpen } = useDashboard()
 
@@ -79,6 +79,8 @@ const period = ref<Period>('daily')
         />
 
         <div class="grid lg:grid-cols-2 lg:items-start gap-8 mt-8">
+          <!-- ~/components/home/HomeSales.vue -->
+          <HomeSales />
           <!-- ~/components/home/HomeCountries.vue -->
           <HomeCountries />
         </div>

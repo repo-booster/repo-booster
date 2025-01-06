@@ -1,27 +1,38 @@
 <template>
-  <div>
-    <UPageHeader
-      title="Social Media Integration"
-      description="Connect and automate your social media presence"
-    />
+  <div class="flex flex-1 w-full min-w-0">
+    <div class="h-screen flex flex-auto">
+      <UDashboardPage>
+        <UDashboardPanel grow>
+          <UDashboardNavbar title="Features" />
+          <UPageHeader
+            title="Social Media Integration"
+            description="Connect and automate your social media presence"
+          />
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Connected Accounts -->
-      <div class="lg:col-span-2 space-y-6">
-        <SocialMediaAccounts :accounts="connectedAccounts" />
-        <SocialMediaScheduler :posts="scheduledPosts" />
-      </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-subgrid gap-6 col-span-max">
+              <!-- Connected Accounts and Scheduler -->
+              <div class="space-y-6">
+                <SocialMediaAccounts :accounts="connectedAccounts" />
+                <SocialMediaScheduler :posts="scheduledPosts" />
+              </div>
 
-      <!-- Analytics -->
-      <div class="space-y-6">
-        <SocialMediaStats :stats="socialStats" />
-        <SocialMediaSuggestions :suggestions="contentSuggestions" />
-      </div>
+              <!-- Analytics and Suggestions -->
+              <div class="space-y-6">
+                <SocialMediaStats :stats="socialStats" />
+                <SocialMediaSuggestions :suggestions="contentSuggestions" />
+              </div>
+            </div>
+          </div>
+        </UDashboardPanel>
+      </UDashboardPage>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref } from 'vue'
+
 const connectedAccounts = ref([
   { platform: 'twitter', username: '@repobooster', connected: true },
   { platform: 'linkedin', username: 'Repo Booster', connected: true },

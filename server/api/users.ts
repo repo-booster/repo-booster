@@ -1,4 +1,4 @@
-import type { User, UserStatus } from '~/types'
+import type { User, UserStatus } from '~/types/types'
 
 const users: User[] = [{
   id: 1,

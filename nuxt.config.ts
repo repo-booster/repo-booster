@@ -17,11 +17,9 @@ export default defineNuxtConfig({
     enabled: true
   },
 
-  app: {
-    head: {
-      meta: [
-        { name: 'robots', content: 'noindex, nofollow' } // Default for all pages
-      ]
+  router: {
+    options: {
+      scrollBehavior: 'smooth'
     }
   },
 
@@ -41,7 +39,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
-  compatibilityDate: '2025-01-02',
+  compatibilityDate: '2024-07-11',
 
   typescript: {
     strict: false
@@ -55,9 +53,6 @@ export default defineNuxtConfig({
       }
     }
   },
-
-  // Add the custom main.css file
-  css: ['~/assets/css/main.css'],
 
   sitemap: <Partial<import('@nuxtjs/sitemap').ModuleOptions>>{
     hostname: 'https://app.repo-booster.com',
@@ -79,4 +74,4 @@ export default defineNuxtConfig({
       '/users'
     ]
   }
-});
+})

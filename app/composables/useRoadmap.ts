@@ -1,4 +1,4 @@
-import type { Milestone, OpenRole, ProjectStats, Task } from '@/types/roadmap'
+import type { Milestone, OpenRole, ProjectStats, Task } from '~/types/roadmap'
 
 export function useRoadmap() {
   const milestones = ref<Milestone[]>([])

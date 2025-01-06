@@ -11,6 +11,9 @@ const _useDashboard = () => {
     'g-i': () => router.push('/inbox'),
     'g-u': () => router.push('/users'),
     'g-s': () => router.push('/settings'),
+    'g-g': () => router.push('/features/star-growth'),
+    'g-r': () => router.push('/features/readme-seo'),
+    'g-l': () => router.push('/features/updates'),
     '?': () => isHelpSlideoverOpen.value = true,
     'n': () => isNotificationsSlideoverOpen.value = true
   })

@@ -1,4 +1,3 @@
-// declaration.d.ts
 declare module 'nuxt-simple-sitemap' {
   export interface ModuleOptions {
     siteUrl: string

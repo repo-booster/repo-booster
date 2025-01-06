@@ -1,75 +1,86 @@
+<!-- eslint-disable vue/no-parsing-error -->
 <template>
-  <div class="min-h-screen flex flex-col">
-    <!-- Page Header -->
-    <UPageHeader
-      title="SEO Analysis"
-      description="Comprehensive SEO analysis for your repository"
-      class="mb-6"
-    >
-      <template #right>
-        <UButton
-          color="primary"
-          icon="i-heroicons-magnifying-glass"
-          :loading="analyzing"
-          @click="analyzeSEO"
+  <UDashboardPage>
+    <UDashboardPanel grow>
+      <UDashboardNavbar title="Features" />
+      <div class="flex flex-1 w-full min-w-0">
+        <!-- Page Header -->
+        <UPageHeader
+          title="SEO Analysis"
+          description="Comprehensive SEO analysis for your repository"
+          class="mb-6"
         >
-          Analyze Now
-        </UButton>
-      </template>
-    </UPageHeader>
+          <template #right>
+            <UButton
+              color="primary"
+              icon="i-heroicons-magnifying-glass"
+              :loading="analyzing"
+              @click="analyzeSEO"
+            >
+              Analyze Now
+            </UButton>
+          </template>
+        </UPageHeader>
 
-    <!-- Main Content Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
-      <!-- Repository Input Form -->
-      <div class="lg:col-span-2">
-        <SeoAnalysisForm v-model="repoUrl" />
+        <!-- Main Content Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+          <!-- Repository Input Form -->
+          <div class="lg:col-span-2">
+            <SeoAnalysisForm v-model="repoUrl" />
+          </div>
+
+          <!-- Quick Tips Section -->
+          <UCard>
+            <template #header>
+              <h3 class="text-lg font-medium">
+                Quick Tips
+              </h3>
+            </template>
+            <ul class="space-y-3">
+              <li
+                v-for="(tip, index) in quickTips"
+                :key="index"
+                class="flex gap-2"
+              >
+                <UIcon
+                  name="i-heroicons-light-bulb"
+                  class="w-5 h-5 text-yellow-500 shrink-0"
+                />
+                <span class="text-sm">{{ tip }}</span>
+              </li>
+            </ul>
+          </UCard>
+        </div>
+
+        <!-- Results Section -->
+        <div
+          v-if="results"
+          class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          <!-- SEO Score -->
+          <div class="col-span-1 lg:col-span-1">
+            <SeoAnalysisScore :score="results.score" />
+          </div>
+
+          <!-- Metrics Section -->
+          <div class="col-span-1 md:col-span-2 lg:col-span-2">
+            <SeoAnalysisMetrics :metrics="results.metrics" />
+          </div>
+
+          <!-- Recommendations -->
+          <div class="col-span-1 lg:col-span-4">
+            <SeoAnalysisRecommendations :recommendations="results.recommendations" />
+          </div>
+        </div>
       </div>
-
-      <!-- Quick Tips Section -->
-      <UCard>
-        <template #header>
-          <h3 class="text-lg font-medium">Quick Tips</h3>
-        </template>
-        <ul class="space-y-3">
-          <li
-            v-for="(tip, index) in quickTips"
-            :key="index"
-            class="flex gap-2"
-          >
-            <UIcon
-              name="i-heroicons-light-bulb"
-              class="w-5 h-5 text-yellow-500 shrink-0"
-            />
-            <span class="text-sm">{{ tip }}</span>
-          </li>
-        </ul>
-      </UCard>
-    </div>
-
-    <!-- Results Section -->
-    <div
-      v-if="results"
-      class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-    >
-      <!-- SEO Score -->
-      <div class="col-span-1 lg:col-span-1">
-        <SeoAnalysisScore :score="results.score" />
-      </div>
-
-      <!-- Metrics Section -->
-      <div class="col-span-1 md:col-span-2 lg:col-span-2">
-        <SeoAnalysisMetrics :metrics="results.metrics" />
-      </div>
-
-      <!-- Recommendations -->
-      <div class="col-span-1 lg:col-span-4">
-        <SeoAnalysisRecommendations :recommendations="results.recommendations" />
-      </div>
-    </div>
-  </div>
+    </udashboardpanel>
+  </udashboardpage>
 </template>
 
-<script setup lang="ts">
+<script
+    setup
+    lang="ts"
+  >
 const repoUrl = ref('')
 const analyzing = ref(false)
 const results = ref<{
