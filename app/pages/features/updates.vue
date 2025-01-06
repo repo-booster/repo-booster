@@ -1,17 +1,15 @@
 <template>
-  <div class="h-full flex flex-col overflow-y-auto">
-    <UDashboardPage class="h-full">
-      <UDashboardPanel grow />
-
-      <UDashboardToolbar class="py-0 px-1.5 overflow-x-auto" />
-      <UPageHeader
+  <div class="flex flex-col h-full">
+    <UDashboardPage>
+      <!-- Page Header -->
+      <UDashboardNavbar
         title="Latest Updates"
         description="Track recent changes and updates to your repositories"
       />
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4">
-        <!-- Updates List -->
-        <div class="lg:col-span-2 space-y-6 overflow-y-auto custom-scrollbar">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+        <!-- Updates Section -->
+        <div class="lg:col-span-2 space-y-6">
           <UCard>
             <template #header>
               <div class="flex items-center justify-between">
@@ -21,42 +19,43 @@
                 <USelectMenu
                   v-model="selectedRepo"
                   :options="repositories"
-                  placeholder="All repositories"
+                  placeholder="Filter by repository"
                 />
               </div>
             </template>
-
-            <div class="space-y-6">
+            <div class="divide-y divide-gray-200 dark:divide-gray-800">
               <div
                 v-for="update in filteredUpdates"
                 :key="update.id"
-                class="flex gap-4"
+                class="py-4"
               >
-                <div class="relative">
-                  <div class="w-2 h-2 rounded-full bg-primary mt-2" />
-                  <div class="absolute top-3 bottom-0 left-1/2 w-px bg-gray-800 -translate-x-1/2" />
-                </div>
-                <div class="flex-1 pb-6">
-                  <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
-                    <span>{{ formatDate(update.date) }}</span>
-                    <span>•</span>
-                    <span>{{ update.type }}</span>
+                <div class="flex gap-4 items-start">
+                  <div class="relative">
+                    <div class="w-2 h-2 rounded-full bg-primary mt-2" />
+                    <div class="absolute top-3 bottom-0 left-1/2 w-px bg-gray-800 -translate-x-1/2" />
                   </div>
-                  <h4 class="font-medium mb-2">
-                    {{ update.title }}
-                  </h4>
-                  <p class="text-sm text-gray-500">
-                    {{ update.description }}
-                  </p>
-                  <div class="mt-3 flex gap-2">
-                    <UChip
-                      v-for="tag in update.tags"
-                      :key="tag"
-                      :colors="getTagColor(tag)"
-                      size="sm"
-                    >
-                      {{ tag }}
-                    </UChip>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                      <span>{{ formatDate(update.date) }}</span>
+                      <span>•</span>
+                      <span>{{ update.type }}</span>
+                    </div>
+                    <h4 class="font-medium text-lg mb-2">
+                      {{ update.title }}
+                    </h4>
+                    <p class="text-sm text-gray-500">
+                      {{ update.description }}
+                    </p>
+                    <div class="mt-3 flex gap-2 flex-wrap">
+                      <UChip
+                        v-for="tag in update.tags"
+                        :key="tag"
+                        :colors="getTagColor(tag)"
+                        size="sm"
+                      >
+                        {{ tag }}
+                      </UChip>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -73,14 +72,14 @@
                 Update Statistics
               </h3>
             </template>
-            <div class="space-y-4">
+            <div class="space-y-4 p-4">
               <div
                 v-for="stat in updateStats"
                 :key="stat.label"
                 class="flex justify-between items-center"
               >
                 <span class="text-sm text-gray-500">{{ stat.label }}</span>
-                <span class="font-medium">{{ stat.value }}</span>
+                <span class="font-medium text-lg">{{ stat.value }}</span>
               </div>
             </div>
           </UCard>
@@ -92,7 +91,7 @@
                 Content Types
               </h3>
             </template>
-            <div class="space-y-4">
+            <div class="space-y-4 p-4">
               <div
                 v-for="type in contentTypes"
                 :key="type.name"
@@ -110,7 +109,7 @@
                     {{ type.count }} updates
                   </div>
                 </div>
-                <div class="w-24 h-2 rounded-full bg-gray-800">
+                <div class="w-24 h-2 rounded-full bg-gray-200 dark:bg-gray-700">
                   <div
                     class="h-full rounded-full bg-primary"
                     :style="{ width: `${type.percentage}%` }"

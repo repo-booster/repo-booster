@@ -1,29 +1,42 @@
-<!-- eslint-disable vue/no-parsing-error -->
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="Features" />
-      <div class="flex flex-1 w-full min-w-0">
+      <UDashboardNavbar title="Features">
+        <template #right>
+          <UButton
+            color="primary"
+            icon="i-heroicons-magnifying-glass"
+            :loading="analyzing"
+            @click="analyzeSEO"
+          >
+            Analyze Now
+          </UButton>
+        </template>
+      </UDashboardNavbar>
+
+      <UDashboardToolbar>
+        <template #left>
+          <UButton
+            variant="ghost"
+            icon="i-heroicons-arrow-path"
+            size="sm"
+            @click="refreshData"
+          >
+            Refresh
+          </UButton>
+        </template>
+      </UDashboardToolbar>
+
+      <UDashboardPanelContent>
         <!-- Page Header -->
         <UPageHeader
           title="SEO Analysis"
           description="Comprehensive SEO analysis for your repository"
           class="mb-6"
-        >
-          <template #right>
-            <UButton
-              color="primary"
-              icon="i-heroicons-magnifying-glass"
-              :loading="analyzing"
-              @click="analyzeSEO"
-            >
-              Analyze Now
-            </UButton>
-          </template>
-        </UPageHeader>
+        />
 
         <!-- Main Content Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Repository Input Form -->
           <div class="lg:col-span-2">
             <SeoAnalysisForm v-model="repoUrl" />
@@ -55,7 +68,7 @@
         <!-- Results Section -->
         <div
           v-if="results"
-          class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           <!-- SEO Score -->
           <div class="col-span-1 lg:col-span-1">
@@ -69,18 +82,17 @@
 
           <!-- Recommendations -->
           <div class="col-span-1 lg:col-span-4">
-            <SeoAnalysisRecommendations :recommendations="results.recommendations" />
+            <SeoAnalysisRecommendations
+              :recommendations="results.recommendations"
+            />
           </div>
         </div>
-      </div>
-    </udashboardpanel>
-  </udashboardpage>
+      </UDashboardPanelContent>
+    </UDashboardPanel>
+  </UDashboardPage>
 </template>
 
-<script
-    setup
-    lang="ts"
-  >
+<script setup lang="ts">
 const repoUrl = ref('')
 const analyzing = ref(false)
 const results = ref<{
@@ -96,10 +108,13 @@ const quickTips = [
   'Include clear project descriptions'
 ]
 
+function refreshData() {
+  console.log('Data refreshed')
+}
+
 async function analyzeSEO() {
   analyzing.value = true
   try {
-    // Simulated Results for Demo
     results.value = {
       score: 78,
       metrics: [

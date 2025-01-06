@@ -16,7 +16,7 @@ export interface Task {
   title: string
   description: string
   completed: boolean
-  difficulty: 'easy' | 'medium' | 'hard'
+  difficulty?: 'easy' | 'medium' | 'hard' // Made optional to allow for tasks without difficulty
 }
 
 export interface Contributor {
@@ -29,12 +29,17 @@ export interface OpenRole {
   id: string
   title: string
   description: string
-  skills: string[]
+  skills: string[] // Array of required skills for the role
 }
 
 export interface ProjectStats {
   label: string
   value: string
+}
+
+export interface Guideline {
+  id: string
+  text: string
 }
 
 /**
@@ -53,4 +58,14 @@ export function getDifficultyColor(difficulty: 'easy' | 'medium' | 'hard'): Badg
     default:
       return 'gray'
   }
+}
+
+/**
+ * Example project data structure for initialization or testing.
+ */
+export const exampleData = {
+  milestones: [] as Milestone[],
+  projectStats: [] as ProjectStats[],
+  openRoles: [] as OpenRole[],
+  guidelines: [] as Guideline[]
 }

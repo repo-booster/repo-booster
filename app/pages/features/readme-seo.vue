@@ -1,179 +1,14 @@
-<template>
-  <div>
-    <div class="flex flex-1 w-full min-w-0">
-      <UPageHeader
-        title="README Scanner"
-        description="Analyze and optimize your repository's README file"
-      />
-      <div class="grid grid-cols-4 lg:grid-cols-3 gap-12">
-        <!-- Main Scanner -->
-        <div class="lg:col-span-4 space-y-8">
-          <ReadmeScannerForm v-model="repoUrl" />
-
-          <div
-            v-if="results"
-            class="space-y-6"
-          >
-            <ReadmeScannerResults :results="results" />
-          </div>
-        </div>
-
-        <!-- Tools Panel -->
-        <div class="space-y-6">
-          <!-- Quick Tools -->
-          <UCard>
-            <template #header>
-              <h3 class="text-lg font-medium">
-                README Tools
-              </h3>
-            </template>
-
-            <div class="space-y-4">
-              <div
-                v-for="tool in tools"
-                :key="tool.id"
-                class="p-3 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
-                @click="activateTool(tool.id)"
-              >
-                <div class="flex items-center gap-3">
-                  <UIcon
-                    :name="tool.icon"
-                    class="w-5 h-5 text-primary"
-                  />
-                  <div>
-                    <div class="font-medium">
-                      {{ tool.name }}
-                    </div>
-                    <div class="text-sm text-gray-500">
-                      {{ tool.description }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UCard>
-
-          <!-- Templates -->
-          <UCard>
-            <template #header>
-              <h3 class="text-lg font-medium">
-                README Templates
-              </h3>
-            </template>
-
-            <div class="space-y-4">
-              <div
-                v-for="template in templates"
-                :key="template.id"
-                class="p-3 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
-                @click="useTemplate(template.id)"
-              >
-                <div class="flex items-center gap-3">
-                  <UIcon
-                    :name="template.icon"
-                    class="w-5 h-5 text-primary"
-                  />
-                  <div>
-                    <div class="font-medium">
-                      {{ template.name }}
-                    </div>
-                    <div class="text-sm text-gray-500">
-                      {{ template.description }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </UCard>
-
-          <!-- Best Practices -->
-          <UCard>
-            <template #header>
-              <h3 class="text-lg font-medium">
-                Best Practices
-              </h3>
-            </template>
-
-            <ul class="space-y-3">
-              <li
-                v-for="(practice, index) in bestPractices"
-                :key="index"
-                class="flex gap-3"
-              >
-                <UIcon
-                  name="i-heroicons-check-circle"
-                  class="w-5 h-5 text-green-500 shrink-0"
-                />
-                <span class="text-sm">{{ practice }}</span>
-              </li>
-            </ul>
-          </UCard>
-        </div>
-      </div>
-
-      <!-- Tool Modals -->
-      <UModal v-model="showHeadingGenerator">
-        <UCard>
-          <template #header>
-            <h3 class="text-lg font-medium">
-              Heading Generator
-            </h3>
-          </template>
-          <div class="space-y-4">
-            <UTextarea
-              v-model="headingInput"
-              placeholder="Enter your project description..."
-              col="4"
-            />
-            <div
-              v-if="generatedHeadings"
-              class="space-y-2"
-            >
-              <div
-                v-for="(heading, index) in generatedHeadings"
-                :key="index"
-                class="p-2 rounded bg-gray-800/50 cursor-pointer hover:bg-gray-800"
-                @click="copyHeading(heading)"
-              >
-                {{ heading }}
-              </div>
-            </div>
-          </div>
-          <template #footer>
-            <div class="flex justify-end gap-2">
-              <UButton
-                color="gray"
-                variant="soft"
-                @click="showHeadingGenerator = false"
-              >
-                Close
-              </UButton>
-              <UButton
-                color="primary"
-                :loading="generating"
-                @click="generateHeadings"
-              >
-                Generate
-              </UButton>
-            </div>
-          </template>
-        </UCard>
-      </UModal>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
+import { ref } from 'vue'
+
+// Define refs for reactive data
 const repoUrl = ref('')
+const repoContent = ref('')
 const results = ref<{
   score: number
-  suggestions: Array<{
-    type: 'success' | 'warning' | 'error'
-    text: string
-  }>
+  suggestions: Array<{ type: 'success' | 'warning' | 'error', text: string }>
 } | null>(null)
 
-// Tools configuration
 const tools = [
   {
     id: 'heading-generator',
@@ -192,96 +27,218 @@ const tools = [
     name: 'TOC Generator',
     description: 'Generate table of contents',
     icon: 'i-heroicons-list-bullet'
-  },
-  {
-    id: 'emoji-picker',
-    name: 'Emoji Picker',
-    description: 'Add relevant emojis to sections',
-    icon: 'i-heroicons-face-smile'
-  },
-  {
-    id: 'screenshot-formatter',
-    name: 'Screenshot Formatter',
-    description: 'Format and optimize screenshots',
-    icon: 'i-heroicons-photo'
   }
 ]
 
-// README templates
 const templates = [
   {
     id: 'standard',
     name: 'Standard Project',
     description: 'Basic project template',
     icon: 'i-heroicons-document-text'
-  },
-  {
-    id: 'library',
-    name: 'Library/Package',
-    description: 'Template for libraries',
-    icon: 'i-heroicons-cube'
-  },
-  {
-    id: 'docs',
-    name: 'Documentation',
-    description: 'Detailed documentation template',
-    icon: 'i-heroicons-book-open'
-  },
-  {
-    id: 'portfolio',
-    name: 'Portfolio Project',
-    description: 'Showcase your work',
-    icon: 'i-heroicons-presentation-chart-line'
   }
 ]
 
-// Best practices
 const bestPractices = [
   'Include a clear project description',
   'Add installation instructions',
-  'Provide usage examples with code',
-  'List features and requirements',
-  'Include contributing guidelines',
-  'Add license information',
-  'Use screenshots or GIFs',
-  'Keep content organized and structured'
+  'Provide usage examples with code'
 ]
 
-// Heading generator state
-const showHeadingGenerator = ref(false)
-const headingInput = ref('')
 const generating = ref(false)
-const generatedHeadings = ref<string[]>([])
 
-async function activateTool(toolId: string) {
-  if (toolId === 'heading-generator') {
-    showHeadingGenerator.value = true
-  }
-  // Implement other tool activations
+// Method to fetch repository content
+async function fetchRepository() {
+  console.log(`Fetching repository content for: ${repoUrl.value}`)
+  // Simulated repository content retrieval
+  repoContent.value = `
+# Example Repository
+
+This is an example README file for your repository.
+
+## Features
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Installation
+\`\`\`bash
+npm install
+\`\`\`
+
+## Usage
+\`\`\`js
+import { example } from 'example-library'
+example()
+\`\`\`
+  `
 }
 
-async function generateHeadings() {
-  if (!headingInput.value) return
-
-  generating.value = true
-  try {
-    // TODO: Implement actual heading generation
-    generatedHeadings.value = [
-      '🚀 Project Name - Description',
-      '✨ Project Name | One-line Description',
-      '💫 Project Name: Brief Description'
-    ]
-  } finally {
-    generating.value = false
-  }
-}
-
-function copyHeading(heading: string) {
-  navigator.clipboard.writeText(heading)
-}
-
-async function useTemplate(templateId: string) {
-  // TODO: Implement template usage
-  console.log('Using template:', templateId)
+function refreshScanner() {
+  console.log('Scanner refreshed')
+  repoUrl.value = ''
+  repoContent.value = ''
+  results.value = null
 }
 </script>
+
+<template>
+  <UDashboardPage>
+    <UDashboardPanel grow>
+      <UDashboardNavbar title="README Scanner">
+        <template #right>
+          <UButton
+            color="primary"
+            icon="i-heroicons-magnifying-glass"
+            :loading="generating"
+          >
+            Generate Headings
+          </UButton>
+        </template>
+      </UDashboardNavbar>
+
+      <UDashboardToolbar>
+        <template #left>
+          <UButton
+            variant="ghost"
+            icon="i-heroicons-arrow-path"
+            size="sm"
+            @click="refreshScanner"
+          >
+            Refresh
+          </UButton>
+        </template>
+      </UDashboardToolbar>
+
+      <UDashboardPanelContent>
+        <UPageHeader
+          title="README Scanner"
+          description="Analyze and optimize your repository's README file"
+          class="mb-6"
+        />
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Repository Input Section -->
+          <div class="lg:col-span-2 space-y-8">
+            <div class="space-y-4">
+              <UInput
+                v-model="repoUrl"
+                placeholder="Enter repository URL"
+                label="Repository URL"
+              />
+              <UButton
+                color="primary"
+                @click="fetchRepository"
+              >
+                Fetch Repository
+              </UButton>
+            </div>
+
+            <!-- Repository Content Section -->
+            <div
+              v-if="repoContent"
+              class="space-y-4"
+            >
+              <h3 class="text-lg font-medium">
+                Edit README (Markdown Supported)
+              </h3>
+              <UMarkdownEditor v-model="repoContent" />
+            </div>
+
+            <!-- Scanner Results -->
+            <div
+              v-if="results"
+              class="space-y-6"
+            >
+              <ReadmeScannerResults :results="results" />
+            </div>
+          </div>
+
+          <!-- Tools and Templates Panel -->
+          <div class="space-y-6">
+            <UCard>
+              <template #header>
+                <h3 class="text-lg font-medium">
+                  README Tools
+                </h3>
+              </template>
+              <div class="space-y-4">
+                <div
+                  v-for="tool in tools"
+                  :key="tool.id"
+                  class="p-3 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
+                >
+                  <div class="flex items-center gap-3">
+                    <UIcon
+                      :name="tool.icon"
+                      class="w-5 h-5 text-primary"
+                    />
+                    <div>
+                      <div class="font-medium">
+                        {{ tool.name }}
+                      </div>
+                      <div class="text-sm text-gray-500">
+                        {{ tool.description }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </UCard>
+
+            <UCard>
+              <template #header>
+                <h3 class="text-lg font-medium">
+                  README Templates
+                </h3>
+              </template>
+              <div class="space-y-4">
+                <div
+                  v-for="template in templates"
+                  :key="template.id"
+                  class="p-3 rounded-lg hover:bg-gray-800/50 transition-colors cursor-pointer"
+                >
+                  <div class="flex items-center gap-3">
+                    <UIcon
+                      :name="template.icon"
+                      class="w-5 h-5 text-primary"
+                    />
+                    <div>
+                      <div class="font-medium">
+                        {{ template.name }}
+                      </div>
+                      <div class="text-sm text-gray-500">
+                        {{ template.description }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </UCard>
+
+            <UCard>
+              <template #header>
+                <h3 class="text-lg font-medium">
+                  Best Practices
+                </h3>
+              </template>
+              <ul class="space-y-3">
+                <li
+                  v-for="(practice, index) in bestPractices"
+                  :key="index"
+                  class="flex gap-3"
+                >
+                  <UIcon
+                    name="i-heroicons-check-circle"
+                    class="w-5 h-5 text-green-500 shrink-0"
+                  />
+                  <span class="text-sm">{{ practice }}</span>
+                </li>
+              </ul>
+            </UCard>
+          </div>
+        </div>
+      </UDashboardPanelContent>
+    </UDashboardPanel>
+  </UDashboardPage>
+</template>
