@@ -1,7 +1,2 @@
-github:
-  - '@Repo-Booster'
-open_collective: 'repo-booster'
-custom:
-  - 'https://medium.com/gerome24'
-  - 'https://medium.com/repo-booster'
-  - 'https://repo-booster.com/sponsors'
+github: [repo-booster]
+open_collective: repo-booster
